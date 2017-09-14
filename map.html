@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #map {
+            height: 350px;
+            width: 50%;
+            margin-left: 50%;
+        }
+        #curve_chart {
+            margin-left: 50%;
+
+        }
+        #tracker{
+            position: absolute;
+            top: 150px;
+            left: 100px;
+            font-size: 200%;
+
+        }
+    </style>
+</head>
+<body>
+<div id="tracker" style="width: 200px; font-size: 120%">Hello</div>
+<div id="curve_chart" style="width: 600px; height: 400px"></div>
+
+<div id="map"></div>
+
+<script>
+
+    var numVisitors = 10;
+
+    // data array and corresponding marker array
+    var visitors = [];
+    var markers = [];
+    var timeInterval = 3;
+
+    // map variables
+    var data = [];
+    var labels = ['Number of Visitors', 'Time Increment'];
+    data.push(labels);
+    var graphInterval = 0;
+
+    // generates a map with certain number of random visitors
+    function generateMap(numVisitors, map) {
+
+        var latitude;
+        var longitude;
+        // generate random visitors and add them to global list
+
+        for(var i = 0; i < numVisitors; i++) {
+            // random latitude and longitude
+            latitude = (Math.random() * 150) - 50;
+            longitude = (Math.random() * 150) + 25;
+
+            // create position variable
+            var position = {lat: latitude, lng: longitude};
+            visitors.push(position);
+
+            // create marker for view and push into array
+            var marker = new google.maps.Marker({
+                position: position,
+                map: map
+            });
+            markers.push(marker);
+
+        }
+
+        // update tracker
+        document.getElementById("tracker").innerText = "Number of visitors: " + visitors.length;
+
+    }
+    // randomly adjust data and markers
+    function updateMap(map, chart) {
+        // random chance of removal and addition
+        var randVal = Math.random();
+        // deletes marker if there is at least one marker and if correct value is selected
+        if(randVal <= 0.5 && markers.length > 0 && visitors.length > 0) {
+            // pop from data list and set marker to null
+            visitors.pop();
+            markers[markers.length - 1].setMap(null);
+            markers.pop();
+
+        }
+        else {
+            // add new marker and visitor element
+            var latitude = (Math.random() * 150) - 50;
+            var longitude = (Math.random() * 150) + 25;
+            var position = {lat: latitude, lng: longitude};
+            markers.push(new google.maps.Marker({
+                position: position,
+                map: map
+            }));
+            visitors.push(position);
+        }
+
+
+        // update tracker
+        document.getElementById("tracker").innerText = "Number of visitors: " + visitors.length;
+
+        // update chart
+        drawChart();
+
+
+
+
+    }
+
+
+    function initMap() {
+        var uluru = {lat: -25.363, lng: 131.044};
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 2,
+            center: uluru
+        });
+
+        // initial creation of map
+        generateMap(numVisitors, map);
+
+        // update map
+        setInterval(function(){ updateMap(map); }, timeInterval * 1000);
+
+    }
+</script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    console.log("hello");
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        //  push new point to the data array
+        var elem = [];
+        elem.push(graphInterval);
+        elem.push(visitors.length);
+        data.push(elem);
+        graphInterval++;
+
+
+
+        var graphData = google.visualization.arrayToDataTable(data);
+
+        var options = {
+            title: 'Visitor Count',
+            curveType: 'function',
+            legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+        chart.draw(graphData, options);
+
+
+    }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTadANQbYR6aBPio59zsjn4rPJN5uw00s
+&callback=initMap">
+</script>
+</body>
+</html>
