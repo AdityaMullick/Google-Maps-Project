@@ -15,8 +15,7 @@
             position: absolute;
             top: 150px;
             left: 100px;
-            font-size: 200%;
-
+            font-weight: 900;
         }
         #table_div{
             position: absolute;
@@ -24,22 +23,75 @@
             bottom: 10%;
             height: 40%;
         }
+
+        #myTable{
+            position: absolute;
+            bottom: -20%;
+            left: 10%;
+
+
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th {
+            text-align: left;
+        }
+        table {
+            border-collapse: collapse;
+            width: 30%;
+            height: 40%;
+        }
+
+        #chartContainer{
+            position: absolute;
+            top: 0%;
+            right: 0%;
+
+        }
     </style>
 </head>
 <body>
-<div id="tracker" style="width: 200px; font-size: 120%"></div>
+<div id="tracker" style="width: 250px; font-size: 200%"></div>
 <div id="curve_chart" style="width: 600px; height: 400px"></div>
 <div id="map"></div>
-<script src="map.js"></script>
 <div id="table_div"></div>
+<div id="chartContainer" style="height: 370px; width:50%;"></div>
+<table id="myTable">
+    <tr>
+        <th>Country</th>
+        <th>Number of Visitors</th>
+    </tr>
+    <tr>
+        <td>Spain</td>
+        <td>Germany</td>
+    </tr>
+    <tr>
+        <td>Italy</td>
+        <td>Mexico</td>
+    </tr>
+    <tr>
+        <td>USA</td>
+        <td>Austria</td>
+    </tr>
+    <tr>
+        <td>Greece</td>
+        <td>UK</td>
+    </tr>
+
+</table>
+
+<script type="text/javascript" src="chance.js"></script>
+<script type="text/javascript" src="user.js"></script>
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript" src="chart.js"></script>
+<script type="text/javascript" src="map.js"></script>
 <script type="text/javascript" src="table.js"></script>
-
-<script async defer
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script type="text/javascript" src="chart.js"></script>
+<script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTadANQbYR6aBPio59zsjn4rPJN5uw00s
-&callback=initMap">
+&callback=load">
 </script>
 </body>
 </html>
