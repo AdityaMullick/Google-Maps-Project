@@ -2,10 +2,19 @@
 <html>
 <head>
     <style>
+        body{
+            background-color: #ecf0f1;
+        }
         #map {
             height: 350px;
             width: 50%;
             margin-left: 50%;
+        }
+        #title{
+            font-size: 200%;
+            position: absolute;
+            left: 10%;
+            top: 10%;
         }
         #curve_chart {
             margin-left: 50%;
@@ -14,8 +23,16 @@
         #tracker{
             position: absolute;
             top: 150px;
-            left: 100px;
+            left: 18%;
             font-weight: 900;
+        }
+        #status {
+            font-size: 150%;
+            position: absolute;
+            left: 7%;
+            bottom: 20%;
+
+
         }
         #table_div{
             position: absolute;
@@ -26,22 +43,23 @@
 
         #myTable{
             position: absolute;
-            bottom: -20%;
+            top: 40%;
             left: 10%;
 
 
         }
         table, th, td {
-            border: 1px solid black;
+            border: 1px solid #ddd;
+
         }
-        th {
-            text-align: left;
+        th{
+            width: 80%;
         }
-        table {
-            border-collapse: collapse;
-            width: 30%;
-            height: 40%;
+        #label{
+            background-color: #2ecc71;
         }
+
+
 
         #chartContainer{
             position: absolute;
@@ -49,37 +67,24 @@
             right: 0%;
 
         }
+        tr:nth-child(even){background-color: #f3f2f2}
+
     </style>
 </head>
 <body>
-<div id="tracker" style="width: 250px; font-size: 200%"></div>
+<div id="title"><u>Number of Visitors</u></div>
+<div id="tracker" style="font-size: 200%"></div>
 <div id="curve_chart" style="width: 600px; height: 400px"></div>
 <div id="map"></div>
-<div id="table_div"></div>
 <div id="chartContainer" style="height: 370px; width:50%;"></div>
-<table id="myTable">
-    <tr>
+<table class = "pure-table" id="myTable">
+    <tr id="label">
         <th>Country</th>
-        <th>Number of Visitors</th>
-    </tr>
-    <tr>
-        <td>Spain</td>
-        <td>Germany</td>
-    </tr>
-    <tr>
-        <td>Italy</td>
-        <td>Mexico</td>
-    </tr>
-    <tr>
-        <td>USA</td>
-        <td>Austria</td>
-    </tr>
-    <tr>
-        <td>Greece</td>
-        <td>UK</td>
+        <th>Visitors</th>
     </tr>
 
 </table>
+<div id="status"></div>
 
 <script type="text/javascript" src="chance.js"></script>
 <script type="text/javascript" src="user.js"></script>

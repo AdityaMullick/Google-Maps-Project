@@ -3,7 +3,7 @@ var chart;
 function createChart() {
     chart = new CanvasJS.Chart("chartContainer", {
         title: {
-            text: "Adding & Updating dataPoints"
+            text: "Number of Visitors on Map"
         },
         data: [
             {

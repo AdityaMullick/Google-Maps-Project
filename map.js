@@ -46,6 +46,8 @@ function generateMap(numVisitors) {
 function generateMarkerInfo(marker, visitor) {
     //var visitor = getVisitor(marker.position);
     console.log("visitor in info is " + visitor);
+    var visitorLat = Math.round(visitor.position.lat * 100) / 100;
+    var visitorLng = Math.round(visitor.position.lng * 100) / 100;
 
 
     var contentString = '<div id="content">'+
@@ -54,7 +56,7 @@ function generateMarkerInfo(marker, visitor) {
         '<h1 id="firstHeading" class="firstHeading"></h1>'+
         '<div id="bodyContent">'+
         '<p><b>Name: ' + visitor.name + '</b></p>'+
-        '<p><b>Position: ' +  visitor.position.lat + ', ' + visitor.position.lng +  '</b></p>'+
+        '<p><b>Position: ' +  visitorLat + ', ' + visitorLng +  '</b></p>'+
         '<p><b>Country: ' + visitor.country + '</b></p>'+
         '</div>'+
         '</div>';

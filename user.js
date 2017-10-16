@@ -3,12 +3,12 @@
  */
 
 var visitors = [];
-var timeInterval = 3;
-var numVisitors = 5;
+var timeInterval = 2;
+var numVisitors = 2;
 
 
 // country names
-var countries = ['USA', 'Greece', 'Spain', 'Italy'];
+var countries = ['USA', 'Greece', 'Spain', 'Italy', 'Hello'];
 
 
 function load() {
@@ -50,7 +50,8 @@ function generateUsers(numVisitors) {
         visitors.push(visitor);
 
     }
-    document.getElementById("tracker").innerText = "Number of visitors: " + visitors.length;
+    document.getElementById("tracker").innerText = visitors.length;
+    document.getElementById("status").innerText = "Demo Created";
 
 
 
@@ -80,8 +81,14 @@ function addVisitor() {
     addCountry(visitor.country);
 
     // update tracker
-    document.getElementById("tracker").innerText = "Number of visitors: " + visitors.length;
+    document.getElementById("tracker").innerText = visitors.length;
 
+    var markerLat = Math.round(visitor.position.lat * 100) / 100;
+    var markerLng = Math.round(visitor.position.lng * 100) / 100;
+
+    // update status
+    document.getElementById("status").innerText = "Inserting " + visitor.name + " to "
+                                                + "(" + markerLat + ", " + markerLng + ")";
     updateChart(visitors.length);
 
 
@@ -92,43 +99,40 @@ function addVisitor() {
 
 function mutateVisitor() {
 
-    var visitor = {};
-
     // generate random index to update
     var randValue = Math.floor(Math.random() * visitors.length);
-    console.log("the value of randValue in mutateVisitor is " + randValue);
+    var visitor = visitors[randValue];
+    if(typeof(visitor) == "undefined") {
+        return;
+    }
 
-    // update the country
-    removeCountry(visitors[randValue].country);
+    var formerLat = Math.round(visitors[randValue].position.lat * 100) / 100;
+    var formerLng = Math.round(visitors[randValue].position.lng * 100) / 100;
 
-    var name = chance.name();
-    visitor.name = name;
+
 
 
     // random latitude and longitude
     var latitude = (Math.random() * 150) - 60;
     var longitude = (Math.random() * 150) + 25;
 
+    var newLat = Math.round(latitude * 100) / 100;
+    var newLng = Math.round(longitude * 100) / 100;
+
     // create position variable
     var position = {lat: latitude, lng: longitude};
     visitor.position = position;
 
-    // generate a random country
-    var randVal = Math.floor(Math.random() * countries.length);
-    visitor.country = countries[randVal];
-    visitors[randVal] = visitor;
-
-
-
     mutateMarker(position, randValue, visitor);
 
-    // update country
-    addCountry(visitor.country);
 
+    // update status
+    document.getElementById("status").innerText = "Moving " + visitors[randValue].name + " from "
+        + "(" + formerLat + ", " + formerLng + ")" + " to " + "(" + newLat + ", " + newLng + ")";
 
 
     // update tracker
-    document.getElementById("tracker").innerText = "Number of visitors: " + visitors.length;
+    document.getElementById("tracker").innerText =  visitors.length;
 
     // update chart
     updateChart(visitors.length);
@@ -142,8 +146,17 @@ function removeVisitor() {
         return;
     }
 
+
+
     // generate random index to update
     var randVal = Math.floor(Math.random() * visitors.length);
+
+    var markerLat = Math.round(visitors[randVal].position.lat * 100) / 100;
+    var markerLng = Math.round(visitors[randVal].position.lng * 100) / 100;
+
+    // update status
+    document.getElementById("status").innerText = "Removing " + visitors[randVal].name + " from "
+        + "(" + markerLat + ", " + markerLng + ")";
 
     // remove country from table
     removeCountry(visitors[randVal].country);
@@ -158,7 +171,10 @@ function removeVisitor() {
     // update chart
     updateChart(visitors.length);
 
-    document.getElementById("tracker").innerText = "Number of visitors: " + visitors.length;
+    document.getElementById("tracker").innerText = visitors.length;
+
+
+
 
 
 }
@@ -168,13 +184,13 @@ function removeVisitor() {
 
 function update() {
 
-    console.log(visitors.length);
-    console.log(markers.length);
+
 
     // generate random value
     var randVal = Math.random();
 
-    // deletes
+
+     // deletes
     if(randVal < 0.33 && visitors.length  > 0) {
         removeVisitor();
 
@@ -187,6 +203,9 @@ function update() {
         mutateVisitor();
 
     }
+
+
+
 
 }
 
